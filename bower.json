@@ -10,7 +10,11 @@
   "license": "MIT",
   "homepage": "https://github.com/mruzekw/pubnub-connect/",
   "ignore": [
-    "**/.*"
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#~0.3.4"
