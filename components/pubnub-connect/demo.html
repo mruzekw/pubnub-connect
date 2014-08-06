@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>pubnub-connect Demo</title>
+
+  <script src="../platform/platform.js"></script>
+  <link rel="import" href="pubnub-connect.html">
+
+</head>
+<body unresolved>
+
+  <p>An example of using <code>&lt;pubnub-connect></code>:</p>
+
+  <pubnub-connect
+    publish-key="demo"
+    subscribe-key="demo"
+    channel="seahorse-flavor"
+    history="true">
+  </pubnub-connect>
+
+  <p>Watch each message make a round trip!</p>
+
+  <button>Send Random Message</button>
+
+  <ul>
+    <template is="auto-binding" repeat="{{ msg in msgs }}">
+      <li>{{ msg }}</li>
+    </template>
+  </ul>
+
+  <script>
+    document.addEventListener('polymer-ready', function() {
+
+      var pubnub = document.querySelector('pubnub-connect'),
+          button = document.querySelector('button'),
+          log = document.querySelector('template'),
+          msgs = [
+            'Any fool can write code that a computer can understand. Good programmers write code that humans can understand. -Martin Fowler',
+            'Conceptual integrity is the most important consideration in system design. -Fred Brooks, "The Mythical Man-Month"',
+            'Always code as if the person who ends up maintaining your code will be a violent psychopath who knows where you live.',
+            'I have always found that plans are useless, but planning is indispensable. -Dwight Eisenhower',
+            'Design and programming are human activities; forget that and all is lost. -Bjarne Stroustrup'
+          ];
+
+      log.addEventListener('template-bound', function () {
+        log.model = { msgs: [] }; 
+      });
+
+      pubnub.addEventListener('received', function(event) {
+        log.model.msgs.push(event.detail);
+      });
+
+      button.addEventListener('click', function() { 
+        var msg = msgs[ Math.floor(Math.random() * msgs.length) ];
+        pubnub.publish(msg);
+      });
+
+    });
+  </script>
+
+  <p>See more advanced demo of this element in <a href="#">&lt;pubnub-chat&gt;</a>.</p>
+
+</body>
+</html>

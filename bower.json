@@ -1,0 +1,7 @@
+{
+  "name": "pubnub-connect#gh-pages",
+  "private": true,
+  "dependencies": {
+    "pubnub-connect": "mruzekw/pubnub-connect#master"
+  }
+}
