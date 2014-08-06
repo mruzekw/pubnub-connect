@@ -1,0 +1,143 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+Element (non-UI) providing connection to a PubNub channel.
+
+##### Example
+
+    <pubnub-connect
+      publish-key="demo"
+      subscribe-key="demo"
+      channel="seahorse-flavor"
+      history="true"
+      on-received="..."
+      on-presence="...">
+    </pubnub-connect>
+
+@element pubnub-connect
+@blurb Element (non-UI) providing connection to PubNub channel.
+@status alpha
+@homepage https://github.com/mruzekw/pubnub-connect/
+-->
+
+<polymer-element
+  attributes="pubkey subkey channel history"
+  name="pubnub-connect">
+
+  <script src="http://cdn.pubnub.com/pubnub.min.js"></script>
+  <script>
+    Polymer( 'pubnub-connect', {
+      /**
+       * The `pubkey` attribute specifies the publishing key.
+       * 
+       * @attribute pubkey
+       * @type string
+       */
+
+      /**
+       * The `subkey` attribute specifies the subscription key.
+       * 
+       * @attribute subkey
+       * @type string
+       */
+
+      /**
+       * The `channel` attribute specifies the channel to subscribe to.
+       * 
+       * @attribute channel
+       * @type string
+       */
+
+      /**
+       * The `history` attribute specifies whether or not to grab channel history.
+       * 
+       * @attribute history
+       * @type boolean
+       * @default true
+       */
+
+      /**
+       * When the element is `created`, set defaults.
+       */
+      created: function () {
+        this.pubkey = '';
+        this.subkey = '';
+        this.channel = '';
+        this.history = true;
+      },
+
+      /**
+       * The `presence` event is fired whenever PubNub registers
+       * a new connection to the channel.
+       * 
+       * @event presence
+       * @param {Object} detail
+       *   @param {string} detail.sound An amazing sound.
+       */
+
+      /**
+       * The `received` event is fired whenever we
+       * pubnub receives a message.
+       * 
+       * @event received
+       * @param {Object} detail
+       *   @param {*} detail.data Arbitrary data
+       */
+
+      /**
+       * When the element is `ready`, set up PubNub.
+       */
+      ready : function () {
+        var el = this,
+            channel = el['channel'],
+            history = el['history'];
+
+        this.pubnub = PUBNUB({
+          publish_key: this['pubkey'],
+          subscribe_key: this['subkey']
+        });
+
+        // Open TCP Socket
+        this.pubnub.subscribe({
+           channel: channel,
+           message: receive,
+           presence: presence
+        });
+
+        // Presence
+        function presence(data) {
+          el.fire('presence', data);
+        }
+
+        // Receive Event
+        function receive(msg) {
+          el.fire('received', msg);
+        }
+
+        // History
+        if (history) {
+          this.pubnub.history({
+            limit: 100,
+            channel: channel,
+            callback: function(msgs) {
+              el.pubnub.each(msgs[0], receive);
+            }
+          });
+        }
+      },
+
+      /**
+       * The `publish` method will publish a given piece of data to the channel.
+       * 
+       * @method publish
+       * @param {*} data Pass in a specific data.
+       */
+      publish: function (data) {
+        this.pubnub.publish({
+          channel : this['channel'],
+          message : data
+        });
+      }
+    });
+  </script>
+</polymer-element>
