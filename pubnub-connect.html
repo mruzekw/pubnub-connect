@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<script src="http://cdn.pubnub.com/pubnub.min.js"></script>
 
 <!--
 Element (non-UI) providing connection to a PubNub channel.
@@ -24,7 +25,6 @@ Element (non-UI) providing connection to a PubNub channel.
   attributes="pubkey subkey channel history"
   name="pubnub-connect">
 
-  <script src="http://cdn.pubnub.com/pubnub.min.js"></script>
   <script>
     Polymer( 'pubnub-connect', {
       /**
