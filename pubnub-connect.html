@@ -29,28 +29,28 @@ Element (non-UI) providing connection to a PubNub channel.
     Polymer( 'pubnub-connect', {
       /**
        * The `pubkey` attribute specifies the publishing key.
-       * 
+       *
        * @attribute pubkey
        * @type string
        */
 
       /**
        * The `subkey` attribute specifies the subscription key.
-       * 
+       *
        * @attribute subkey
        * @type string
        */
 
       /**
        * The `channel` attribute specifies the channel to subscribe to.
-       * 
+       *
        * @attribute channel
        * @type string
        */
 
       /**
        * The `history` attribute specifies whether or not to grab channel history.
-       * 
+       *
        * @attribute history
        * @type boolean
        * @default true
@@ -69,7 +69,7 @@ Element (non-UI) providing connection to a PubNub channel.
       /**
        * The `presence` event is fired whenever PubNub registers
        * a new connection to the channel.
-       * 
+       *
        * @event presence
        * @param {Object} detail
        *   @param {string} detail.sound An amazing sound.
@@ -78,7 +78,7 @@ Element (non-UI) providing connection to a PubNub channel.
       /**
        * The `received` event is fired whenever we
        * pubnub receives a message.
-       * 
+       *
        * @event received
        * @param {Object} detail
        *   @param {*} detail.data Arbitrary data
@@ -128,7 +128,7 @@ Element (non-UI) providing connection to a PubNub channel.
 
       /**
        * The `publish` method will publish a given piece of data to the channel.
-       * 
+       *
        * @method publish
        * @param {*} data Pass in a specific data.
        */
