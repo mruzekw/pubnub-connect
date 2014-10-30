@@ -5,7 +5,7 @@
     "Will Mruzek <mruzekw@gmail.com>"
   ],
   "description": "Element (non-UI) providing connection to PubNub channel.",
-  "keywords": "pubnub, polymer, web-components",
+  "keywords": ["pubnub", "polymer", "web-components"],
   "main": "pubnub-connect.html",
   "license": "MIT",
   "homepage": "https://github.com/mruzekw/pubnub-connect/",
